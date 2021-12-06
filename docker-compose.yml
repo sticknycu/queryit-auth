@@ -4,14 +4,14 @@ services:
 
   api_service:
     image: "openjdk:17-jdk-oraclelinux8"
-    build: ..
+    build: .
     restart: always
     ports:
       - 8080:8080
     depends_on:
-      - auth_db
+      - postgres_db
 
-  auth_db:
+  postgres_db:
     image: "postgres:latest"
     restart: always
     ports:

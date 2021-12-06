@@ -1,20 +1,15 @@
-# This Dockerfile uses Docker Multi-Stage Builds
-# See https://docs.docker.com/engine/userguide/eng-image/multistage-build/
-# Requires Docker v17.05
+# Defining some macros
+ARG MAVEN_VERSION=3
+ARG OPENJDK_VERSION=17
+# Container image which we are going to use
+FROM maven:${MAVEN_VERSION}-openjdk-${OPENJDK_VERSION}
 
-# Use OpenJDK JDK image for intermiediate build
-FROM openjdk:17.0.1-oraclelinux7 AS build
+# Directory we are going to work on
+WORKDIR .
 
-# Install packages required for build
-CMD apt-get -y update
-CMD apt-get install -y build-essential
-CMD apt-get install -y git
-CMD mkdir -p /usr/share/man/man1
-CMD apt-get install -y maven
+# Some tests to see if versions are good
+RUN java --version
+RUN mvn --version
 
-# Build from source and create artifact
-WORKDIR /src
-
-COPY mvn* pom.xml /src/
-COPY src /src/src
-COPY .mvn /src/.mvn
+# Copy files from project and move them to container to /src directory
+COPY . .

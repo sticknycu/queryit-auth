@@ -1,4 +1,4 @@
-name: run_back-end
+name: run_backend_auth
 
 on: [ push ]
 
