@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+
+  api_service:
+    image: "openjdk:17-jdk-oraclelinux8"
+    build:
+      context: auth
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - auth_db
+
+  auth_db:
+    image: "postgres:latest"
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: auth
+      POSTGRES_PASSWORD: root
