@@ -15,7 +15,8 @@ services:
     image: "postgres:latest"
     restart: always
     ports:
-      - 5432:5432
+      - 5433:5433
     environment:
       POSTGRES_DB: auth
       POSTGRES_PASSWORD: root
+    command: -p 5433
